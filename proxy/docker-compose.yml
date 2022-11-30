@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  uh-shenlong-proxy:
+    image: "nginx:stable-alpine"
+    container_name: "uh-shenlong-proxy"
+    volumes:
+      - "./conf:/etc/nginx/conf.d"
+    restart: "always"
+    environment:
+      VIRTUAL_HOST: "meuincrivelsistema.com"
+    networks:
+      - open-network
+      - internal
+    ports:
+      - "80:80"
+      - "443:443"
+
+volumes:
+  vhost:
+
+networks:
+  open-network:
+    external: false
+  internal:
+    name: ${INTERNAL_NETWORK_NAME}
+    driver: bridge
+    external: true
