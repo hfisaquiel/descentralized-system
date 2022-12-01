@@ -5,6 +5,7 @@ body {
   margin: 0;
   padding: 0;
   position: relative;
+  font-family: helvetica;
 }
 
 body {
@@ -16,9 +17,22 @@ body {
   flex: 1;
   justify-content: center;
   align-items: center;
-  font-family: helvetica;
+  font-size: 2rem;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+}
+
+img {
+  max-width: 75%;
+  margin: 0 auto;
+}
+
+h1 {
   text-transform: uppercase;
+  text-align: center;
   font-weight: bold;
-  font-size: 3rem;
   color: green;
 }
