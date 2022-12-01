@@ -1,0 +1,17 @@
+version: "3.7"
+
+services:
+  vegeta-web-host:
+    image: "nginx:stable-alpine"
+    container_name: "vegeta-web-host"
+    volumes:
+      - "./src:/usr/share/nginx/html"
+    restart: "always"
+    networks:
+      - internal
+
+networks:
+  internal:
+    name: ${INTERNAL_NETWORK_NAME}
+    driver: bridge
+    external: true
