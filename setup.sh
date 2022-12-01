@@ -4,6 +4,7 @@ set -e
 export INTERNAL_NETWORK_NAME=descentralized-system-network
 
 SCRIPT_DIR=$PWD
+DIR_FRONTEND="./frontend"
 
 runDockerComposeRebuild() {
     docker-compose up -d --build --force
@@ -53,3 +54,7 @@ cd -P ./proxy || {
     exit 1
 } && runDockerComposeRebuild
 cd "$SCRIPT_DIR"
+
+echo ''
+echo '\e[34;1mCreating front-end instances\e[0m'
+runComposeOnScopeProjectList $DIR_FRONTEND "$SCRIPT_DIR"
