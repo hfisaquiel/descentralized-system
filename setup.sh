@@ -7,7 +7,7 @@ SCRIPT_DIR=$PWD
 DIR_FRONTEND="./frontend"
 
 runDockerComposeRebuild() {
-    docker-compose up -d --build --force
+    docker-compose up -d --build --force --remove-orphans
 }
 
 runComposeOnScopeProjectList() {
