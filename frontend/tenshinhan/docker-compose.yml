@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  tenshinhan-web-host:
+    image: next-yarn-base
+    build:
+      context: .
+    container_name: "tenshinhan-web-host"
+    env_file:
+      - .env
+    restart: "always"
+    networks:
+      - internal
+
+networks:
+  internal:
+    name: ${INTERNAL_NETWORK_NAME}
+    driver: bridge
+    external: true
