@@ -1,13 +1,20 @@
 #!/bin/bash
+while read -r line; do export "${line?}"; done <.env
 set -e
 
 export INTERNAL_NETWORK_NAME=descentralized-system-network
 
+ENV_NAME=${ENVIRONMENT='production'}
 SCRIPT_DIR=$PWD
 DIR_FRONTEND="./frontend"
 
 runDockerComposeRebuild() {
-    docker-compose up -d --build --force --remove-orphans
+    local runningOn=$1 || 'default'
+    echo "trying bring up $runningOn build"
+
+    if ! $1 && ! (docker compose down && docker compose up -d "$1" --build --remove-orphans); then
+        docker compose up -d --build --remove-orphans
+    fi
 }
 
 runComposeOnScopeProjectList() {
@@ -23,7 +30,7 @@ runComposeOnScopeProjectList() {
             cd "$dir_name"
 
             echo "runnig $path_compose"
-            runDockerComposeRebuild
+            runDockerComposeRebuild $ENV_NAME
 
             cd "$CURRENT_FOLDER_PATH"
         fi
@@ -52,7 +59,7 @@ echo '\e[34;1mBringing up Proxy\e[0m'
 cd -P ./proxy || {
     echo 'No Proxy. aborting!'
     exit 1
-} && runDockerComposeRebuild
+} && runDockerComposeRebuild $ENV_NAME
 cd "$SCRIPT_DIR"
 
 echo ''
