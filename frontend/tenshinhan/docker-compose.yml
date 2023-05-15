@@ -1,4 +1,5 @@
 version: "3.7"
+name: "frontend-tenshinhan"
 
 services:
   tenshinhan-web-host:
