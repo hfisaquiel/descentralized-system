@@ -1,0 +1,52 @@
+version: "3.7"
+
+services:
+  deploy:
+    image: freeza-base
+    depends_on:
+      - construction
+    volumes:
+      - .:/app
+    networks:
+      - internal
+    command: yarn build
+
+  production:
+    image: freeza-base
+    container_name: freeza-web-host
+    depends_on:
+      - deploy
+    volumes:
+      - .:/app
+    restart: "always"
+    networks:
+      - internal
+    command: yarn start
+
+  development:
+    image: freeza-base
+    container_name: freeza-web-host
+    depends_on:
+      - construction
+    volumes:
+      - .:/app
+    restart: "always"
+    networks:
+      - internal
+    command: yarn dev
+
+  construction:
+    build:
+      context: .
+    image: freeza-base
+    volumes:
+      - .:/app
+    networks:
+      - internal
+    command: yarn
+
+networks:
+  internal:
+    name: ${INTERNAL_NETWORK_NAME}
+    driver: bridge
+    external: true
